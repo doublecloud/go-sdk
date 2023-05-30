@@ -10,7 +10,7 @@ Go SDK for [DoubleCloud API](https://double.cloud/docs/en/public-api/).
 go install github.com/doublecloud/go-sdk@latest
 ```
 
-## Example usages
+## Usage examples
 
 ### Initializing SDK
 
@@ -30,4 +30,4 @@ sdk, err := dc.Build(ctx, dc.Config{
 
 ### More examples
 
-More examples can be found in [examples dir](examples).
+More examples can be found in [examples directory](examples).
