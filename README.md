@@ -7,7 +7,7 @@ Go SDK for [DoubleCloud API](https://double.cloud/docs/en/public-api/).
 ## Installation
 
 ```bash
-go get github.com/doublecloud/go-sdk
+go install github.com/doublecloud/go-sdk@latest
 ```
 
 ## Example usages
