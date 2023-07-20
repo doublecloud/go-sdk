@@ -64,20 +64,20 @@ func (o *Operation) Proto() *Proto  { return o.proto }
 func (o *Operation) Client() Client { return o.client }
 
 //revive:disable:var-naming
-func (o *Operation) Id() string { return o.proto.Id }
+func (o *Operation) Id() string { return o.proto.GetId() }
 
 //revive:enable:var-naming
-func (o *Operation) Description() string { return o.proto.Description }
-func (o *Operation) CreatedBy() string   { return o.proto.CreatedBy }
+func (o *Operation) Description() string { return o.proto.GetDescription() }
+func (o *Operation) CreatedBy() string   { return o.proto.GetCreatedBy() }
 
-func (o *Operation) ResourceId() string { return o.proto.ResourceId }
+func (o *Operation) ResourceId() string { return o.proto.GetResourceId() }
 
 func (o *Operation) CreatedAt() time.Time {
-	return o.proto.CreateTime.AsTime()
+	return o.proto.GetCreateTime().AsTime()
 }
 
 func (o *Operation) Metadata() map[string]string {
-	return o.proto.Metadata
+	return o.proto.GetMetadata()
 }
 
 func (o *Operation) Error() error {
@@ -97,7 +97,7 @@ func (o *Operation) ErrorStatus() *status.Status {
 }
 
 func (o *Operation) Done() bool {
-	return o.proto.Status == dc.Operation_STATUS_DONE || o.proto.Status == dc.Operation_STATUS_INVALID
+	return o.proto.GetStatus() == dc.Operation_STATUS_DONE || o.proto.GetStatus() == dc.Operation_STATUS_INVALID
 }
 func (o *Operation) Ok() bool     { return o.Done() && o.proto.GetError() == nil }
 func (o *Operation) Failed() bool { return o.Done() && o.proto.GetError() != nil }
