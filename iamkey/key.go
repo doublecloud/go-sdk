@@ -1,7 +1,6 @@
 package iamkey
 
 import (
-	"encoding/json"
 	"io/ioutil" //nolint:staticcheck
 
 	"github.com/doublecloud/go-sdk/pkg/sdkerrors"
@@ -10,8 +9,6 @@ import (
 
 
 var (
-	_ json.Marshaler   = &Key{}
-	_ json.Unmarshaler = &Key{}
 	// _ yaml.Marshaler   = &gen.Key{}
 	// _ yaml.Unmarshaler = &gen.Key{}
 )
@@ -93,7 +90,7 @@ func (m *Key) MarshalJSON() ([]byte, error) {
 // ReadFromJSONFile reads IAM Key from JSON bytes.
 func ReadFromJSONBytes(keyBytes []byte) (*Key, error) {
 	key := &Key{}
-	err := json.Unmarshal(keyBytes, key)
+	err := protojson.Unmarshal(keyBytes, key)
 	if err != nil {
 		return nil, sdkerrors.WithMessage(err, "key unmarshal fail")
 	}
@@ -112,7 +109,7 @@ func ReadFromJSONFile(path string) (*Key, error) {
 // WriteToJSONFile writes key to file in JSON format.
 // File permissions will be 0600, because private key part is sensitive data.
 func WriteToJSONFile(path string, key *Key) error {
-	data, err := json.MarshalIndent(key, "", "   ")
+	data, err := protojson.Marshal(key)
 	if err != nil {
 		return sdkerrors.WithMessage(err, "key marshal fail")
 	}
