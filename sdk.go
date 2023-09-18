@@ -228,12 +228,12 @@ func (sdk *SDK) InitErr() error {
 	return sdk.initErr
 }
 
-func endpointsMap() map[Endpoint]*APIEndpoint {
+func endpointsMap(baseEndpoint string) map[Endpoint]*APIEndpoint {
 	m := make(map[Endpoint]*APIEndpoint)
 	for _, v := range []Endpoint{ClickHouseServiceID, KafkaServiceID, VpcServiceID, TransferServiceID, VisualizationServiceID} {
 		m[v] = &APIEndpoint{
 			Id:      v,
-			Address: fmt.Sprintf("%v.api.double.cloud:443", v),
+			Address: fmt.Sprintf("%v.%s", v, baseEndpoint),
 		}
 	}
 	return m
@@ -242,7 +242,7 @@ func endpointsMap() map[Endpoint]*APIEndpoint {
 func (sdk *SDK) initConns(ctx context.Context) error {
 	sdk.endpoints.mu.Lock()
 	defer sdk.endpoints.mu.Unlock()
-	sdk.endpoints.ep = endpointsMap()
+	sdk.endpoints.ep = endpointsMap(sdk.conf.Endpoint)
 
 	sdk.endpoints.initDone = true
 	return nil
