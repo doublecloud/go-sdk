@@ -7,10 +7,9 @@ import (
 	"google.golang.org/protobuf/encoding/protojson"
 )
 
-
 var (
-	// _ yaml.Marshaler   = &gen.Key{}
-	// _ yaml.Unmarshaler = &gen.Key{}
+// _ yaml.Marshaler   = &gen.Key{}
+// _ yaml.Unmarshaler = &gen.Key{}
 )
 
 // // New creates new Key from IAM Key Service Create response.

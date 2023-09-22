@@ -27,7 +27,6 @@ import (
 	"github.com/doublecloud/go-sdk/pkg/sdkerrors"
 	"github.com/google/uuid"
 	"golang.org/x/sync/singleflight"
-
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials"
 	"google.golang.org/grpc/credentials/insecure"
@@ -63,8 +62,9 @@ type Config struct {
 
 	// Endpoint is an API endpoint of DoubleCloud against which the SDK is used.
 	// Most users won't need to explicitly set it.
-	Endpoint  string
-	Plaintext bool
+	Endpoint         string
+	OverrideEndpoint bool
+	Plaintext        bool
 }
 
 // SDK is a DoubleCloud SDK
@@ -228,12 +228,18 @@ func (sdk *SDK) InitErr() error {
 	return sdk.initErr
 }
 
-func endpointsMap(baseEndpoint string) map[Endpoint]*APIEndpoint {
+func endpointsMap(baseEndpoint string, overrideEndpoint bool) map[Endpoint]*APIEndpoint {
 	m := make(map[Endpoint]*APIEndpoint)
 	for _, v := range []Endpoint{ClickHouseServiceID, KafkaServiceID, VpcServiceID, TransferServiceID, VisualizationServiceID} {
+		var endpoint string
+		if overrideEndpoint {
+			endpoint = baseEndpoint
+		} else {
+			endpoint = fmt.Sprintf("%v.%s", v, baseEndpoint)
+		}
 		m[v] = &APIEndpoint{
 			Id:      v,
-			Address: fmt.Sprintf("%v.%s", v, baseEndpoint),
+			Address: endpoint,
 		}
 	}
 	return m
@@ -242,7 +248,7 @@ func endpointsMap(baseEndpoint string) map[Endpoint]*APIEndpoint {
 func (sdk *SDK) initConns(ctx context.Context) error {
 	sdk.endpoints.mu.Lock()
 	defer sdk.endpoints.mu.Unlock()
-	sdk.endpoints.ep = endpointsMap(sdk.conf.Endpoint)
+	sdk.endpoints.ep = endpointsMap(sdk.conf.Endpoint, sdk.conf.OverrideEndpoint)
 
 	sdk.endpoints.initDone = true
 	return nil

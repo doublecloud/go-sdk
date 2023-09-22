@@ -6,6 +6,13 @@ import (
 	"strings"
 	"time"
 
+	"github.com/doublecloud/go-genproto/doublecloud/clickhouse/v1"
+	"github.com/doublecloud/go-genproto/doublecloud/kafka/v1"
+	"github.com/doublecloud/go-genproto/doublecloud/network/v1"
+	"github.com/doublecloud/go-genproto/doublecloud/transfer/v1"
+	"github.com/doublecloud/go-genproto/doublecloud/v1"
+	dc "github.com/doublecloud/go-genproto/doublecloud/v1"
+	"github.com/doublecloud/go-sdk/pkg/sdkerrors"
 	"github.com/google/uuid"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
@@ -14,14 +21,6 @@ import (
 	"google.golang.org/protobuf/proto"
 	"google.golang.org/protobuf/types/known/anypb"
 	"google.golang.org/protobuf/types/known/emptypb"
-
-	"github.com/doublecloud/go-genproto/doublecloud/clickhouse/v1"
-	"github.com/doublecloud/go-genproto/doublecloud/kafka/v1"
-	"github.com/doublecloud/go-genproto/doublecloud/network/v1"
-	"github.com/doublecloud/go-genproto/doublecloud/transfer/v1"
-	"github.com/doublecloud/go-genproto/doublecloud/v1"
-	dc "github.com/doublecloud/go-genproto/doublecloud/v1"
-	"github.com/doublecloud/go-sdk/pkg/sdkerrors"
 )
 
 const (

@@ -11,7 +11,6 @@ import (
 	"github.com/doublecloud/go-sdk/iamkey"
 	"github.com/doublecloud/go-sdk/pkg/sdkerrors"
 	jwt "github.com/golang-jwt/jwt/v4"
-
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 )

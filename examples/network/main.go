@@ -8,7 +8,6 @@ import (
 
 	"github.com/doublecloud/go-genproto/doublecloud/network/v1"
 	dc "github.com/doublecloud/go-sdk"
-
 	"github.com/doublecloud/go-sdk/iamkey"
 	"github.com/doublecloud/go-sdk/operation"
 )

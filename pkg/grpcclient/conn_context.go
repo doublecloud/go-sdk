@@ -5,9 +5,8 @@ import (
 	"errors"
 	"sync"
 
-	"golang.org/x/sync/singleflight"
-
 	multierror "github.com/hashicorp/go-multierror"
+	"golang.org/x/sync/singleflight"
 	"google.golang.org/grpc"
 )
 
@@ -103,7 +102,7 @@ func (cc *lazyConnContext) GetConn(ctx context.Context, addr string) (*grpc.Clie
 		}
 		defer cc.mu.Unlock()
 		cc.mu.Lock()
-		
+
 		if cc.closed || cc.closing {
 			// cc.mu.Unlock()
 			// we swallow error here, since the client doesn't care about it
