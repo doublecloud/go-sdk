@@ -8,10 +8,9 @@ import (
 
 	"github.com/doublecloud/go-genproto/doublecloud/kafka/v1"
 	dc "github.com/doublecloud/go-sdk"
-	"google.golang.org/protobuf/types/known/wrapperspb"
-
 	"github.com/doublecloud/go-sdk/iamkey"
 	"github.com/doublecloud/go-sdk/operation"
+	"google.golang.org/protobuf/types/known/wrapperspb"
 )
 
 func createCluster(ctx context.Context, dc *dc.SDK, flags *cmdFlags) (*operation.Operation, error) {

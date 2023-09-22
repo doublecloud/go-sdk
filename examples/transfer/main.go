@@ -10,7 +10,6 @@ import (
 	"github.com/doublecloud/go-genproto/doublecloud/transfer/v1/endpoint"
 	endpoint_airbyte "github.com/doublecloud/go-genproto/doublecloud/transfer/v1/endpoint/airbyte"
 	dc "github.com/doublecloud/go-sdk"
-
 	"github.com/doublecloud/go-sdk/iamkey"
 	"github.com/doublecloud/go-sdk/operation"
 )
