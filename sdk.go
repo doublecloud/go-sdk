@@ -153,7 +153,7 @@ func (sdk *SDK) WrapOperation(o *dcv1.Operation, err error) (*operation.Operatio
 	if _, err := uuid.Parse(o.Id); err == nil {
 		return operation.New(sdk.Network().Operation(), o), nil
 	}
-	return nil, sdkerrors.WithMessage(nil, "Unknown operation type")
+	return nil, sdkerrors.WithMessage(fmt.Errorf("opID: %q", o.Id), "Unknown operation type")
 }
 
 func (sdk *SDK) getConn(serviceID Endpoint) func(ctx context.Context) (*grpc.ClientConn, error) {
