@@ -6,6 +6,7 @@ import (
 	"crypto/rsa"
 	"errors"
 	"fmt" //nolint:staticcheck
+	"os"
 	"time"
 
 	"github.com/doublecloud/go-sdk/iamkey"
@@ -97,13 +98,17 @@ func (b *serviceAccountJWTBuilder) SignedToken() (string, error) {
 }
 
 func (b *serviceAccountJWTBuilder) issueToken() *jwt.Token {
+	tokenURL := "https://auth.double.cloud/oauth/token"
+	if os.Getenv("DOUBLE_CLOUD_TOKEN_URL") != "" {
+		tokenURL = os.Getenv("DOUBLE_CLOUD_TOKEN_URL")
+	}
 	issuedAt := time.Now()
 	token := jwt.NewWithClaims(jwtSigningMethodPS256WithSaltLengthEqualsHash, jwt.RegisteredClaims{
 		Issuer:    b.key.GetServiceAccountId(),
 		Subject:   b.key.GetServiceAccountId(),
 		IssuedAt:  jwt.NewNumericDate(issuedAt),
 		ExpiresAt: jwt.NewNumericDate(issuedAt.Add(time.Hour)),
-		Audience:  jwt.ClaimStrings{"https://auth.double.cloud/oauth/token"},
+		Audience:  jwt.ClaimStrings{tokenURL},
 	})
 	token.Header["kid"] = b.key.Id
 	return token
