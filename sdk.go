@@ -255,11 +255,14 @@ func (sdk *SDK) initConns(ctx context.Context) error {
 	return nil
 }
 
-func exchangeJWT2IAM(ctx context.Context, request *iamkey.CreateIamTokenRequest) (*iamkey.CreateIamTokenResponse, error) {
-	tokenURL := "https://auth.double.cloud/oauth/token"
+func tokenURL() string {
 	if os.Getenv("DOUBLE_CLOUD_TOKEN_URL") != "" {
-		tokenURL = os.Getenv("DOUBLE_CLOUD_TOKEN_URL")
+		return os.Getenv("DOUBLE_CLOUD_TOKEN_URL")
 	}
+	return "https://auth.double.cloud/oauth/token"
+}
+
+func exchangeJWT2IAM(ctx context.Context, request *iamkey.CreateIamTokenRequest) (*iamkey.CreateIamTokenResponse, error) {
 	client := http.Client{
 		Transport: &http.Transport{
 			DialContext: (&net.Dialer{
@@ -270,7 +273,7 @@ func exchangeJWT2IAM(ctx context.Context, request *iamkey.CreateIamTokenRequest)
 	}
 	data := fmt.Sprintf("grant_type=urn:ietf:params:oauth:grant-type:jwt-bearer&assertion=%v", request.GetJwt())
 
-	req, err := http.NewRequest("POST", tokenURL, strings.NewReader(data))
+	req, err := http.NewRequest("POST", tokenURL(), strings.NewReader(data))
 	if err != nil {
 		return nil, sdkerrors.WithMessage(err, "request make failed")
 	}
