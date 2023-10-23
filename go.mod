@@ -12,7 +12,7 @@ require (
 )
 
 require (
-	github.com/doublecloud/go-genproto v0.0.0-20231006040533-491bde6e4a58
+	github.com/doublecloud/go-genproto v0.0.0-20231021040559-a5056e78e70e
 	github.com/google/uuid v1.3.1
 	github.com/stretchr/testify v1.8.2
 	google.golang.org/genproto/googleapis/api v0.0.0-20231016165738-49dd2c1f3d0b
