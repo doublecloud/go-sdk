@@ -1,5 +1,5 @@
 // nolint
-package network
+package logs
 
 import (
 	"context"

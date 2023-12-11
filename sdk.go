@@ -19,6 +19,7 @@ import (
 	dcv1 "github.com/doublecloud/go-genproto/doublecloud/v1"
 	"github.com/doublecloud/go-sdk/gen/clickhouse"
 	"github.com/doublecloud/go-sdk/gen/kafka"
+	"github.com/doublecloud/go-sdk/gen/logs"
 	"github.com/doublecloud/go-sdk/gen/network"
 	"github.com/doublecloud/go-sdk/gen/transfer"
 	"github.com/doublecloud/go-sdk/gen/visualization"
@@ -49,6 +50,7 @@ const (
 	VpcServiceID           Endpoint = "vpc"
 	TransferServiceID      Endpoint = "transfer"
 	VisualizationServiceID Endpoint = "visualization"
+	LogsServiceID          Endpoint = "logs"
 )
 
 // Config is a config that is used to create SDK instance.
@@ -231,7 +233,7 @@ func (sdk *SDK) InitErr() error {
 
 func endpointsMap(baseEndpoint string, overrideEndpoint bool) map[Endpoint]*APIEndpoint {
 	m := make(map[Endpoint]*APIEndpoint)
-	for _, v := range []Endpoint{ClickHouseServiceID, KafkaServiceID, VpcServiceID, TransferServiceID, VisualizationServiceID} {
+	for _, v := range []Endpoint{ClickHouseServiceID, KafkaServiceID, VpcServiceID, TransferServiceID, VisualizationServiceID, LogsServiceID} {
 		var endpoint string
 		if overrideEndpoint {
 			endpoint = baseEndpoint
@@ -369,4 +371,8 @@ func (sdk *SDK) Transfer() *transfer.Transfer {
 
 func (sdk *SDK) Visualization() *visualization.Visualization {
 	return visualization.NewVisualization(sdk.getConn(VisualizationServiceID))
+}
+
+func (sdk *SDK) Logs() *logs.Export {
+	return logs.NewExport(sdk.getConn(LogsServiceID))
 }
