@@ -4,7 +4,7 @@ package network
 import (
 	"context"
 
-	network "github.com/doublecloud/go-genproto/doublecloud/logs/v1"
+	logs "github.com/doublecloud/go-genproto/doublecloud/logs/v1"
 	doublecloud "github.com/doublecloud/go-genproto/doublecloud/v1"
 	"google.golang.org/grpc"
 )
@@ -18,39 +18,39 @@ type ExportServiceClient struct {
 }
 
 // Create implements network.ExportServiceClient
-func (c *ExportServiceClient) Create(ctx context.Context, in *network.CreateExportRequest, opts ...grpc.CallOption) (*doublecloud.Operation, error) {
+func (c *ExportServiceClient) Create(ctx context.Context, in *logs.CreateExportRequest, opts ...grpc.CallOption) (*doublecloud.Operation, error) {
 	conn, err := c.getConn(ctx)
 	if err != nil {
 		return nil, err
 	}
-	return network.NewLogExportServiceClient(conn).Create(ctx, in, opts...)
+	return logs.NewLogExportServiceClient(conn).Create(ctx, in, opts...)
 }
 
 // Delete implements network.ExportServiceClient
-func (c *ExportServiceClient) Delete(ctx context.Context, in *network.DeleteExportRequest, opts ...grpc.CallOption) (*doublecloud.Operation, error) {
+func (c *ExportServiceClient) Delete(ctx context.Context, in *logs.DeleteExportRequest, opts ...grpc.CallOption) (*doublecloud.Operation, error) {
 	conn, err := c.getConn(ctx)
 	if err != nil {
 		return nil, err
 	}
-	return network.NewLogExportServiceClient(conn).Delete(ctx, in, opts...)
+	return logs.NewLogExportServiceClient(conn).Delete(ctx, in, opts...)
 }
 
 // Get implements network.ExportServiceClient
-func (c *ExportServiceClient) Get(ctx context.Context, in *network.GetExportRequest, opts ...grpc.CallOption) (*network.LogsExport, error) {
+func (c *ExportServiceClient) Get(ctx context.Context, in *logs.GetExportRequest, opts ...grpc.CallOption) (*logs.LogsExport, error) {
 	conn, err := c.getConn(ctx)
 	if err != nil {
 		return nil, err
 	}
-	return network.NewLogExportServiceClient(conn).Get(ctx, in, opts...)
+	return logs.NewLogExportServiceClient(conn).Get(ctx, in, opts...)
 }
 
 // List implements network.ExportServiceClient
-func (c *ExportServiceClient) List(ctx context.Context, in *network.ListExportRequest, opts ...grpc.CallOption) (*network.ListExportResponse, error) {
+func (c *ExportServiceClient) List(ctx context.Context, in *logs.ListExportRequest, opts ...grpc.CallOption) (*logs.ListExportResponse, error) {
 	conn, err := c.getConn(ctx)
 	if err != nil {
 		return nil, err
 	}
-	return network.NewLogExportServiceClient(conn).List(ctx, in, opts...)
+	return logs.NewLogExportServiceClient(conn).List(ctx, in, opts...)
 }
 
 type ExportIterator struct {
@@ -63,12 +63,12 @@ type ExportIterator struct {
 	pageSize      int64
 
 	client  *ExportServiceClient
-	request *network.ListExportRequest
+	request *logs.ListExportRequest
 
-	items []*network.LogsExport
+	items []*logs.LogsExport
 }
 
-func (c *ExportServiceClient) ExportIterator(ctx context.Context, req *network.ListExportRequest, opts ...grpc.CallOption) *ExportIterator {
+func (c *ExportServiceClient) ExportIterator(ctx context.Context, req *logs.ListExportRequest, opts ...grpc.CallOption) *ExportIterator {
 	var pageSize int64
 	const defaultPageSize = 1000
 
@@ -110,7 +110,7 @@ func (it *ExportIterator) Next() bool {
 	return len(it.items) > 0
 }
 
-func (it *ExportIterator) Take(size int64) ([]*network.LogsExport, error) {
+func (it *ExportIterator) Take(size int64) ([]*logs.LogsExport, error) {
 	if it.err != nil {
 		return nil, it.err
 	}
@@ -124,7 +124,7 @@ func (it *ExportIterator) Take(size int64) ([]*network.LogsExport, error) {
 		it.requestedSize = 0
 	}()
 
-	var result []*network.LogsExport
+	var result []*logs.LogsExport
 
 	for it.requestedSize > 0 && it.Next() {
 		it.requestedSize--
@@ -138,11 +138,11 @@ func (it *ExportIterator) Take(size int64) ([]*network.LogsExport, error) {
 	return result, nil
 }
 
-func (it *ExportIterator) TakeAll() ([]*network.LogsExport, error) {
+func (it *ExportIterator) TakeAll() ([]*logs.LogsExport, error) {
 	return it.Take(0)
 }
 
-func (it *ExportIterator) Value() *network.LogsExport {
+func (it *ExportIterator) Value() *logs.LogsExport {
 	if len(it.items) == 0 {
 		panic("calling Value on empty iterator")
 	}
