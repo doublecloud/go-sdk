@@ -21,7 +21,7 @@ func createCluster(ctx context.Context, dc *dc.SDK, flags *cmdFlags) (*operation
 		Name:      *flags.name,
 		Resources: &clickhouse.ClusterResources{
 			Clickhouse: &clickhouse.ClusterResources_Clickhouse{
-				ResourcePresetId: "s1-c2-m4",
+				ResourcePresetId: "s2-c2-m4",
 				DiskSize:         wrapperspb.Int64(32 * 2 << 30),
 				ReplicaCount:     wrapperspb.Int64(1),
 			},
