@@ -157,7 +157,7 @@ func createTransfer(
 	}
 	var queryCols []string
 	for k, v := range src.ColumnMapping {
-		queryCols = append(queryCols, fmt.Sprintf("%s as %s", k, v))
+		queryCols = append(queryCols, fmt.Sprintf("%s as %s", v, k))
 	}
 	op, err := dc.WrapOperation(dc.Transfer().Transfer().Create(ctx, &transfer.CreateTransferRequest{
 		SourceId:  src.ID,
