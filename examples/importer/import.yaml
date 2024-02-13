@@ -1,0 +1,26 @@
+sources:
+  - type: bigquery
+    table_namespace: ''
+    table: tobe_imported_from_bigquery
+    column_mapping:
+      id: some_other_id
+      owner: user_id
+      value: body
+    conf:
+      project_id: test
+      dataset_id: test
+      credentials_json: -|
+        {}
+  - type: redshift
+    table_namespace: public
+    table: tobe_imported_from_redshift
+    column_mapping:
+      id: id
+      owner: author
+      value: data
+    conf:
+      host: tet
+      port: 4321
+      database: db
+      username: test
+      password: password
