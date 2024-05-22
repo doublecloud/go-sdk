@@ -117,7 +117,10 @@ func (ft *FederationCredentials) IAMToken(ctx context.Context) (*iamkey.CreateIa
 		return nil, err
 	}
 
-	if err := os.MkdirAll(ft.cfg.TokenCachePath, 0777); err != nil && !os.IsExist(err) {
+	if err := os.MkdirAll(
+		ft.cfg.TokenCachePath,
+		0660,
+	); err != nil && !os.IsExist(err) {
 		return nil, err
 	}
 
@@ -128,7 +131,7 @@ func (ft *FederationCredentials) IAMToken(ctx context.Context) (*iamkey.CreateIa
 			ft.cfg.FederationID,
 		),
 		tokenData,
-		0777,
+		0660,
 	); err != nil {
 		return nil, err
 	}
