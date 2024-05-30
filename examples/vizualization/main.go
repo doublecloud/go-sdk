@@ -75,6 +75,20 @@ func main() {
 			panic(err)
 		}
 	default:
-		panic("unknown direction " + *direction)
+		res, err := sdk.Visualization().Workbook().Get(ctx, &visualization.GetWorkbookRequest{
+			WorkbookId: *workbookID,
+		})
+		if err != nil {
+			panic(err)
+		}
+		log.Println(res.Title)
+		_, err = sdk.Visualization().Workbook().Update(ctx, &visualization.UpdateWorkbookRequest{
+			WorkbookId:   *workbookID,
+			Workbook:     &visualization.Workbook{Config: res.Workbook.Config},
+			ForceRewrite: &wrapperspb.BoolValue{Value: true},
+		})
+		if err != nil {
+			panic(err)
+		}
 	}
 }
