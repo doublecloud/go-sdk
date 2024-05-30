@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"github.com/doublecloud/go-sdk/gen/organization"
 	"io/ioutil"
 	"net"
 	"net/http"
@@ -51,6 +52,7 @@ const (
 	TransferServiceID      Endpoint = "transfer"
 	VisualizationServiceID Endpoint = "visualization"
 	LogsServiceID          Endpoint = "logs"
+	OrganizationServiceID  Endpoint = "organization"
 )
 
 // Config is a config that is used to create SDK instance.
@@ -375,4 +377,8 @@ func (sdk *SDK) Visualization() *visualization.Visualization {
 
 func (sdk *SDK) Logs() *logs.Export {
 	return logs.NewExport(sdk.getConn(LogsServiceID))
+}
+
+func (sdk *SDK) Organization() *organization.Organization {
+	return organization.NewOrganization(sdk.getConn(OrganizationServiceID))
 }
