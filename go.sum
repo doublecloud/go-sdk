@@ -5,6 +5,8 @@ github.com/doublecloud/go-genproto v0.0.0-20240327100859-7bed2e6c3ad2 h1:Wvd/tKL
 github.com/doublecloud/go-genproto v0.0.0-20240327100859-7bed2e6c3ad2/go.mod h1:GaWzogQ0MCW4OjW16H1DsXiKOqHXqaYsMy0wKfXwoo4=
 github.com/doublecloud/go-genproto v0.0.0-20240529145340-26557b3e1c45 h1:QcyqANmla8vIADTTwh0YE0H6+Dg/5M29dVQQcUOrjAM=
 github.com/doublecloud/go-genproto v0.0.0-20240529145340-26557b3e1c45/go.mod h1:GaWzogQ0MCW4OjW16H1DsXiKOqHXqaYsMy0wKfXwoo4=
+github.com/doublecloud/go-genproto v0.0.0-20240626040624-2cb8deb5faa5 h1:H9k/J5yH+j/+RlcWiRwyVTY9g6pjQd3vxHtrAcNYymU=
+github.com/doublecloud/go-genproto v0.0.0-20240626040624-2cb8deb5faa5/go.mod h1:GaWzogQ0MCW4OjW16H1DsXiKOqHXqaYsMy0wKfXwoo4=
 github.com/golang-jwt/jwt/v4 v4.5.0 h1:7cYmW1XlMY7h7ii7UhUyChSgS5wUJEnm9uZVTGqOWzg=
 github.com/golang-jwt/jwt/v4 v4.5.0/go.mod h1:m21LjoU+eqJr34lmDMbreY2eSTRJ1cv77w39/MY0Ch0=
 github.com/golang/protobuf v1.5.4 h1:i7eJL8qZTpSEXOPTxNKhASYpMn+8e5Q6AdndVa1dWek=
