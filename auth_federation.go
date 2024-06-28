@@ -10,6 +10,7 @@ import (
 	"net/url"
 	"os"
 	"path"
+	"strings"
 	"time"
 )
 
@@ -154,7 +155,7 @@ func NewFederationCredentials(cfg *FederationConfig) NonExchangeableCredentials 
 	}
 	if cfg.TokenCachePath == "" {
 		home, _ := os.UserHomeDir()
-		cfg.TokenCachePath = fmt.Sprintf("%s/.dcsdk", home)
+		cfg.TokenCachePath = fmt.Sprintf("%s/%s.dcsdk", home, cleanEndpoint(cfg.FederationEndpoint))
 	}
 	if !cfg.DisableTokenCache {
 		cachedToken, err := os.ReadFile(fmt.Sprintf("%s/%s.json", cfg.TokenCachePath, cfg.FederationID))
@@ -172,4 +173,8 @@ func NewFederationCredentials(cfg *FederationConfig) NonExchangeableCredentials 
 	return &FederationCredentials{
 		cfg: cfg,
 	}
+}
+
+func cleanEndpoint(endpoint string) string {
+	return strings.ReplaceAll(endpoint, "https://", "")
 }
