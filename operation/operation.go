@@ -2,6 +2,7 @@ package operation
 
 import (
 	"context"
+	"github.com/doublecloud/go-genproto/doublecloud/airflow/v1"
 	"strconv"
 	"strings"
 	"time"
@@ -28,6 +29,7 @@ const (
 	KAFKA_OPERATION_PREFIX              = "kfo"
 	TRANSFER_OPERATION_PREFIX           = "dtj"
 	TRANSFER_ENDPOINTS_OPERATION_PREFIX = "dte"
+	AIRFLOW_OPERATION_PREFIX            = "afo"
 )
 
 var _ = emptypb.Empty{}
@@ -113,6 +115,8 @@ func (o *Operation) Poll(ctx context.Context, opts ...grpc.CallOption) error {
 		state, err = o.Client().(kafka.OperationServiceClient).Get(ctx, &kafka.GetOperationRequest{OperationId: o.Id()}, opts...)
 	} else if strings.HasPrefix(o.Id(), TRANSFER_OPERATION_PREFIX) || strings.HasPrefix(o.Id(), TRANSFER_ENDPOINTS_OPERATION_PREFIX) {
 		state, err = o.Client().(transfer.OperationServiceClient).Get(ctx, &transfer.GetOperationRequest{OperationId: o.Id()}, opts...)
+	} else if strings.HasPrefix(o.Id(), AIRFLOW_OPERATION_PREFIX) {
+		state, err = o.Client().(airflow.OperationServiceClient).Get(ctx, &airflow.GetOperationRequest{OperationId: o.Id()}, opts...)
 	} else if _, err := uuid.Parse(o.Id()); err == nil {
 		state, err = o.Client().(network.OperationServiceClient).Get(ctx, &network.GetOperationRequest{OperationId: o.Id()}, opts...)
 	}
