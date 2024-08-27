@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"github.com/doublecloud/go-sdk/gen/airflow"
 	"github.com/doublecloud/go-sdk/gen/organization"
 	"io/ioutil"
 	"net"
@@ -53,6 +54,7 @@ const (
 	VisualizationServiceID Endpoint = "visualization"
 	LogsServiceID          Endpoint = "logs"
 	OrganizationServiceID  Endpoint = "organization"
+	AirflowServiceID       Endpoint = "airflow"
 )
 
 // Config is a config that is used to create SDK instance.
@@ -155,6 +157,9 @@ func (sdk *SDK) WrapOperation(o *dcv1.Operation, err error) (*operation.Operatio
 	if strings.HasPrefix(o.Id, operation.TRANSFER_ENDPOINTS_OPERATION_PREFIX) || strings.HasPrefix(o.Id, operation.TRANSFER_OPERATION_PREFIX) {
 		return operation.New(sdk.Transfer().Operation(), o), nil
 	}
+	if strings.HasPrefix(o.Id, operation.AIRFLOW_OPERATION_PREFIX) {
+		return operation.New(sdk.Airflow().Operation(), o), nil
+	}
 	if _, err := uuid.Parse(o.Id); err == nil {
 		return operation.New(sdk.Network().Operation(), o), nil
 	}
@@ -235,7 +240,7 @@ func (sdk *SDK) InitErr() error {
 
 func endpointsMap(baseEndpoint string, overrideEndpoint bool) map[Endpoint]*APIEndpoint {
 	m := make(map[Endpoint]*APIEndpoint)
-	for _, v := range []Endpoint{ClickHouseServiceID, KafkaServiceID, VpcServiceID, TransferServiceID, VisualizationServiceID, LogsServiceID} {
+	for _, v := range []Endpoint{ClickHouseServiceID, KafkaServiceID, VpcServiceID, TransferServiceID, VisualizationServiceID, LogsServiceID, AirflowServiceID} {
 		var endpoint string
 		if overrideEndpoint {
 			endpoint = baseEndpoint
@@ -381,4 +386,8 @@ func (sdk *SDK) Logs() *logs.Export {
 
 func (sdk *SDK) Organization() *organization.Organization {
 	return organization.NewOrganization(sdk.getConn(OrganizationServiceID))
+}
+
+func (sdk *SDK) Airflow() *airflow.Airflow {
+	return airflow.NewAirflow(sdk.getConn(AirflowServiceID))
 }
